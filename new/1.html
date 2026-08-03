@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手作甜點 | 每一口，都是手作的溫暖</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+    <!-- 1. 頂部導覽列 Navbar -->
+    <nav class="navbar">
+        <a href="#" class="brand-logo">Maison Cookie</a>
+        <ul class="nav-links">
+            <li><a href="#about">關於我們</a></li>
+            <li><a href="#products">熱銷商品</a></li>
+            <li><a href="#gifts">禮盒專區</a></li>
+            <li><a href="#faq">訂購須知</a></li>
+            <li><a href="#contact">聯絡我們</a></li>
+        </ul>
+        <div class="nav-icons">
+            <i class="bi bi-search" id="search-btn"></i>
+            <i class="bi bi-bag" id="cart-btn"></i>
+        </div>
+    </nav>
+
+    <!-- 2. 視覺主視覺區 Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>每一口，<br>都是手作的溫暖。</h1>
+            <p>嚴選天然發酵奶油、比利時巧克力，每日新鮮烘焙，傳遞最純粹的幸福甜香。</p>
+            <div class="btn-group">
+                <a href="#products" class="btn btn-primary">探索美味餅乾</a>
+                <a href="#gifts" class="btn btn-outline">查看所有禮盒</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=800&q=80" alt="手作餅乾特寫">
+        </div>
+    </section>
+
+    <!-- 3. 品牌精神與特色區 Brand Values -->
+    <section class="brand-values">
+        <div class="value-card">
+            <i class="bi bi-flower1"></i>
+            <h3>嚴選天然食材</h3>
+            <p>無人工添加物、無防腐劑，嚴選頂級奶油與進口原料，讓您品嚐最安心的美味。</p>
+        </div>
+        <div class="value-card">
+            <i class="bi bi-fire"></i>
+            <h3>每日新鮮現烤</h3>
+            <p>堅持接單後新鮮製作，精準掌控烘焙火候，確保每一片餅乾的最佳酥脆口感。</p>
+        </div>
+        <div class="value-card">
+            <i class="bi bi-gift"></i>
+            <h3>精美手作包裝</h3>
+            <p>送禮自用兩相宜，細緻的質感包裝傳遞滿滿心意，點亮每個值得慶祝的時刻。</p>
+        </div>
+    </section>
+
+    <!-- 4. 熱門商品推薦 Featured Products -->
+    <section class="featured-products" id="products">
+        <h2 class="section-title">熱門商品推薦</h2>
+        <p class="section-subtitle">人氣經典口味，滿足您挑剔的味蕾</p>
+        
+        <div class="product-grid">
+            <!-- 商品卡片 1 -->
+            <div class="product-card">
+                <span class="product-tag">人氣首選</span>
+                <div class="product-image-container">
+                    <img src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=600&q=80" alt="法式濃醇可可夾心餅乾">
+                    <img src="https://images.unsplash.com/photo-1618897996318-5a901fa6ca71?auto=format&fit=crop&w=600&q=80" class="hover-img" alt="切開內餡特寫">
+                </div>
+                <div class="product-info">
+                    <h4>法式濃醇可可夾心餅乾</h4>
+                    <div class="product-footer">
+                        <span class="price">NT$ 380</span>
+                        <button class="add-to-cart" title="加入購物車"><i class="bi bi-plus-lg"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 商品卡片 2 -->
+            <div class="product-card">
+                <span class="product-tag">限時限量</span>
+                <div class="product-image-container">
+                    <img src="https://images.unsplash.com/photo-1548365328-8c6db3220e4c?auto=format&fit=crop&w=600&q=80" alt="香草奶油酥餅">
+                    <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=80" class="hover-img" alt="包裝樣貌">
+                </div>
+                <div class="product-info">
+                    <h4>香草奶油鑽石酥餅</h4>
+                    <div class="product-footer">
+                        <span class="price">NT$ 320</span>
+                        <button class="add-to-cart" title="加入購物車"><i class="bi bi-plus-lg"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 商品卡片 3 -->
+            <div class="product-card">
+                <span class="product-tag">微甜</span>
+                <div class="product-image-container">
+                    <img src="https://images.unsplash.com/photo-1621236378699-8597feb4c1ab?auto=format&fit=crop&w=600&q=80" alt="抹茶蔓越莓餅乾">
+                    <img src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=600&q=80" class="hover-img" alt="切開內餡特寫">
+                </div>
+                <div class="product-info">
+                    <h4>京都宇治抹茶蔓越莓</h4>
+                    <div class="product-footer">
+                        <span class="price">NT$ 350</span>
+                        <button class="add-to-cart" title="加入購物車"><i class="bi bi-plus-lg"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 商品卡片 4 -->
+            <div class="product-card">
+                <span class="product-tag">人氣首選</span>
+                <div class="product-image-container">
+                    <img src="https://images.unsplash.com/photo-1532456713082-a6c204d13fb6?auto=format&fit=crop&w=600&q=80" alt="杏仁焦糖酥餅">
+                    <img src="https://images.unsplash.com/photo-1548365328-8c6db3220e4c?auto=format&fit=crop&w=600&q=80" class="hover-img" alt="包裝樣貌">
+                </div>
+                <div class="product-info">
+                    <h4>皇家焦糖杏仁脆餅</h4>
+                    <div class="product-footer">
+                        <span class="price">NT$ 360</span>
+                        <button class="add-to-cart" title="加入購物車"><i class="bi bi-plus-lg"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. 禮盒專區 Gift Boxes -->
+    <section class="gift-section" id="gifts">
+        <h2 class="section-title">經典禮盒系列</h2>
+        <p class="section-subtitle">傳遞心意的最佳首選，專屬您的美好祝福</p>
+
+        <div class="gift-row">
+            <div class="gift-image">
+                <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80" alt="節慶限定禮盒">
+            </div>
+            <div class="gift-content">
+                <h3>節慶限定・心意手作禮盒</h3>
+                <p>針對中秋、過年與聖誕節推出的限定包裝，精選多款店內招牌口味餅乾，搭配質感野餐籃風格設計，讓收禮者感受到滿滿的誠意與溫馨氛圍。</p>
+                <a href="#" class="btn btn-outline">客製化禮盒</a>
+            </div>
+        </div>
+
+        <div class="gift-row">
+            <div class="gift-image">
+                <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80" alt="喜餅彌月專區">
+            </div>
+            <div class="gift-content">
+                <h3>幸福喜餅與彌月專區</h3>
+                <p>見證人生重要時刻的甜蜜伴手禮。我們提供專屬的喜餅與彌月禮盒試吃與客製服務，從裡到外展現獨特品味，與親友共享這份喜悅。</p>
+                <a href="#" class="btn btn-outline">預約試吃</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. 顧客真實評價 Testimonials -->
+    <section class="testimonials">
+        <h2 class="section-title">顧客真實評價</h2>
+        <p class="section-subtitle">聽聽吃過的人怎麼說</p>
+
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="stars">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </div>
+                <p>「餅乾超香酥，完全不會過甜，配咖啡剛剛好！包裝也太美了吧，朋友收到禮盒直呼捨不得吃！」</p>
+                <div class="customer-name">- 台北市，林小姐</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </div>
+                <p>「訂了作為彌月禮盒，親友們的評價超級高！特別喜歡可可夾心口味，濃郁卻不膩口，會一直回購！」</p>
+                <div class="customer-name">- 台中市，陳先生</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </div>
+                <p>「出貨速度很快，包裝非常完整沒有碎掉。每一片都能感受到手作的溫度，真材實料吃得出來！」</p>
+                <div class="customer-name">- 高雄市，王小姐</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Instagram 美照牆 IG Feed -->
+    <section class="ig-feed">
+        <h2 class="section-title">追蹤我們的日常</h2>
+        <p class="section-subtitle">@maison_cookie_tw #手作餅乾生活美學</p>
+
+        <div class="ig-grid">
+            <div class="ig-item">
+                <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=500&q=80" alt="IG 貼文 1">
+                <div class="ig-overlay"><i class="bi bi-instagram"></i></div>
+            </div>
+            <div class="ig-item">
+                <img src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=500&q=80" alt="IG 貼文 2">
+                <div class="ig-overlay"><i class="bi bi-instagram"></i></div>
+            </div>
+            <div class="ig-item">
+                <img src="https://images.unsplash.com/photo-1548365328-8c6db3220e4c?auto=format&fit=crop&w=500&q=80" alt="IG 貼文 3">
+                <div class="ig-overlay"><i class="bi bi-instagram"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. 頁尾 Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Maison Cookie</h4>
+                <p style="font-size: 0.950rem; color: #E6DCD0; margin-bottom: 1rem;">傳遞手作溫度，品嚐純粹美好。</p>
+                <div class="social-icons">
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-line"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>快速連結</h4>
+                <ul>
+                    <li><a href="#about">關於我們</a></li>
+                    <li><a href="#products">熱銷商品</a></li>
+                    <li><a href="#gifts">禮盒專區</a></li>
+                    <li><a href="#faq">訂購須知</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>顧客服務</h4>
+                <ul>
+                    <li><a href="#">常見問題 Q&A</a></li>
+                    <li><a href="#">運送政策說明</a></li>
+                    <li><a href="#">退換貨政策</a></li>
+                    <li><a href="#">隱私權政策</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>聯絡資訊</h4>
+                <ul>
+                    <li>客服信箱：service@maisoncookie.com</li>
+                    <li>營業時間：週一至週五 10:00 - 18:00</li>
+                    <li><a href="#" style="color: var(--primary-color); font-weight: 500;"><i class="bi bi-line"></i> 線上 LINE 客服</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Maison Cookie 手作餅乾專門店. All Rights Reserved. | 本網站僅供作品展示，嚴禁商業用途。防詐騙提醒：我們不會主動要求您操作 ATM 解除分期付款。</p>
+        </div>
+    </footer>
+
+    <!-- jQuery 互動效果 -->
+    <script>
+        $(document).ready(function() {
+            // 點擊購物車按鈕互動
+            $('#cart-btn').on('click', function() {
+                alert('目前購物車尚無商品！快去挑選美味的餅乾吧 🍪');
+            });
+
+            // 點擊搜尋按鈕互動
+            $('#search-btn').on('click', function() {
+                let keyword = prompt('想要找什麼口味的餅乾呢？');
+                if(keyword) {
+                    alert('正在為您搜尋：「' + keyword + '」');
+                }
+            });
+
+            // 加入購物車按鈕點擊特效
+            $('.add-to-cart').on('click', function(e) {
+                e.stopPropagation();
+                let $btn = $(this);
+                $btn.css('background-color', '#BC6C25').css('color', '#FFFFFF');
+                $btn.html('<i class="bi bi-check-lg"></i>');
+                setTimeout(function() {
+                    $btn.css('background-color', '').css('color', '');
+                    $btn.html('<i class="bi bi-plus-lg"></i>');
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
