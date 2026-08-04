@@ -8,6 +8,51 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Huninn&family=Parisienne&display=swap" rel="stylesheet">
 <style>
+  .wave-container {
+  position: relative;
+  width: 100%;
+  height: 15vh;
+  min-height: 100px;
+  max-height: 150px;
+  background-color: #fceade; /* 可以依據你的網頁主色調整背景 */
+}
+
+.waves {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* 讓多層波浪產生交錯的動畫效果 */
+.parallax > use {
+  animation: move-wave 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+}
+
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+
+@keyframes move-wave {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
+}
   :root{
     --cream:#FBF5EA;
     --cream-soft:#FEFBF4;
@@ -114,7 +159,7 @@
   .hero .blob-b{width:220px; height:220px; background:var(--rose); opacity:.35; bottom:-60px; left:-60px;}
   .hero__grid{position:relative; z-index:1; display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center;}
   @media (max-width:900px){ .hero__grid{grid-template-columns:1fr; text-align:center;} }
-  .eyebrow{font-size:0.85rem; letter-spacing:0.25em; color:var(--rose-deep); font-weight:700; margin-bottom:14px; display:inline-block;}
+  .eyebrow{font-size:1rem; letter-spacing:0.25em; color:var(--rose-deep); font-weight:700; margin-bottom:14px; display:inline-block;}
   .hero h1{font-size:clamp(2.1rem, 4.2vw, 3.4rem); line-height:1.35; color:var(--brown);}
   .hero h1 em{font-style:normal; color:var(--rose-deep); border-bottom:4px solid var(--peach-soft);}
   .hero__sub{margin-top:22px; font-size:1.08rem; color:var(--brown-soft); max-width:480px;}
@@ -332,7 +377,19 @@
     </div>
   </div>
 </section>
-
+<div class="wave-container">
+  <svg class="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+    <defs>
+      <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+    </defs>
+    <g class="parallax">
+      <use href="#gentle-wave" x="48" y="0" fill="rgba(249, 246, 238, 0.7)" />
+      <use href="#gentle-wave" x="48" y="3" fill="rgba(249, 246, 238, 0.5)" />
+      <use href="#gentle-wave" x="48" y="5" fill="rgba(249, 246, 238, 0.3)" />
+      <use href="#gentle-wave" x="48" y="7" fill="#FEFBF4" />
+    </g>
+  </svg>
+</div>
 <!-- ============ WHY ============ -->
 <section class="section why" id="why" data-stage>
   <div class="wrap">
@@ -379,7 +436,7 @@
     <div class="testimonials">
       <div class="bubble bubble--1 reveal">
         <p class="quote">「它是我收過最酷的生日禮物，同學都說超好看，我每天都要帶去學校跟大家炫耀！」</p>
-        <div class="bubble__who"><span class="bubble__avatar"></span>10 歲・小翔</div>
+        <div class="bubble__who"><span class="bubble__avatar"></span>10 歲・小郁</div>
       </div>
       <div class="bubble bubble--2 bubble--alt reveal">
         <p class="quote">「材質摸起來真的很舒服，也沒有奇怪的味道，女兒每天都要抱著它才肯睡覺，完全不過敏。」</p>
@@ -418,7 +475,7 @@
         </div>
         <div class="card__body">
           <div class="card__name">星空熊・棉柔</div>
-          <p class="card__desc">極致柔軟的觸感，像雲朵一樣輕盈，抱在懷裡讓人秒融化。</p>
+          <p class="card__desc">肚肚會微微夜光，晚安故事講到一半也不怕黑，安心入睡。</p>
           <div class="card__foot"><span class="card__price">NT$790</span><span class="card__add">加入購物車</span></div>
         </div>
       </div>
@@ -437,6 +494,7 @@
 
       <div class="card reveal">
         <div class="card__stage" style="background:var(--sage);">
+          <span class="card__tag">超大尺寸</span>
          <img class="card__mascot" src="img/shark-icon.png" alt="鯨魚・毛毛玩偶">
         </div>
         <div class="card__body">
@@ -460,6 +518,7 @@
 
       <div class="card reveal">
         <div class="card__stage" style="background:var(--oat);">
+          <span class="card__tag">經典</span>
          <img class="card__mascot" src="img/cat-icon.png" alt="貓咪・毛毛玩偶">
         </div>
         <div class="card__body">
