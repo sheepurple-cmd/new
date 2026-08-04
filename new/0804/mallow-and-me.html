@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mallow & Me 棉覓｜在棉花堆裡，覓一個永遠的擁抱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Huninn&family=Parisienne&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF5EA;
+    --cream-soft:#FEFBF4;
+    --oat:#F0E1C6;
+    --oat-deep:#E2CDA0;
+    --rose:#E4A0A3;
+    --rose-deep:#CE7B82;
+    --peach:#EAA868;
+    --peach-soft:#F3CDA0;
+    --sage:#93A585;
+    --sage-deep:#6F8264;
+    --brown:#4A3626;
+    --brown-soft:#8A6C52;
+    --white:#FFFDF8;
+    --shadow: 0 18px 40px -20px rgba(74,54,38,0.35);
+    --radius-blob: 62% 38% 55% 45% / 45% 55% 42% 58%;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--brown);
+    font-family:'Huninn','Zen Maru Gothic','Noto Sans TC',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Noto Serif TC',serif; margin:0; font-weight:600; letter-spacing:0.02em;}
+  p{margin:0; line-height:1.9;}
+  a{text-decoration:none; color:inherit;}
+  ul{list-style:none; margin:0; padding:0;}
+  .script{font-family:'Parisienne',cursive;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
+  img,svg{display:block;}
+  button{font-family:inherit; cursor:pointer; border:none;}
+
+  /* ---------- decorative blobs ---------- */
+  .blob{position:absolute; border-radius:var(--radius-blob); z-index:0; filter:blur(0.5px);}
+  .blob--float{animation:float 9s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-18px) rotate(4deg);}}
+  @media (prefers-reduced-motion: reduce){ .blob--float{animation:none;} html{scroll-behavior:auto;} }
+
+  /* ---------- plush icon system ---------- */
+  .plush-icon{fill:currentColor;}
+  .plush-icon .face{fill:var(--brown);}
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .8s ease, transform .8s ease;}
+  .reveal.is-visible{opacity:1; transform:translateY(0);}
+
+  /* ---------- trust badge chips ---------- */
+  .chips{display:flex; flex-wrap:wrap; gap:10px;}
+  .chip{
+    background:var(--white); border:1px solid var(--oat-deep); color:var(--brown-soft);
+    padding:8px 16px; border-radius:999px; font-size:0.85rem; display:flex; align-items:center; gap:6px;
+    box-shadow: 0 6px 14px -10px rgba(74,54,38,0.3);
+  }
+
+  /* ================= NAV ================= */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px; backdrop-filter:blur(14px);
+    background:rgba(251,245,234,0.82);
+    border-bottom:1px solid rgba(138,108,82,0.15);
+  }
+  .nav__logo{display:flex; align-items:baseline; gap:8px; font-size:1.5rem; color:var(--rose-deep);}
+  .nav__logo small{font-family:'Noto Serif TC',serif; font-size:0.95rem; color:var(--brown); letter-spacing:0.15em;}
+  .nav__links{display:flex; gap:30px; font-size:0.95rem; color:var(--brown-soft);}
+  .nav__links a{position:relative; padding-bottom:4px;}
+  .nav__links a::after{content:'';position:absolute; left:0; bottom:0; width:0; height:2px; background:var(--rose); transition:width .3s ease;}
+  .nav__links a:hover::after{width:100%;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px; border-radius:999px; font-size:0.95rem; font-weight:700;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn--primary{background:var(--rose-deep); color:var(--white); box-shadow:0 14px 26px -12px rgba(206,123,130,0.7);}
+  .btn--primary:hover{box-shadow:0 18px 30px -12px rgba(206,123,130,0.85);}
+  .btn--ghost{background:transparent; border:1.5px solid var(--brown-soft); color:var(--brown);}
+  .btn--peach{background:var(--peach); color:var(--white); box-shadow:0 14px 26px -12px rgba(234,168,104,0.75);}
+  .nav__cta{display:none;}
+  @media (min-width: 760px){ .nav__cta{display:inline-flex;} }
+  @media (max-width: 880px){ .nav__links{display:none;} }
+
+  /* ================= SEEKING TRAIL (desktop) ================= */
+  .trail{position:fixed; left:22px; top:50%; transform:translateY(-50%); z-index:40; display:none;}
+  @media (min-width:1180px){ .trail{display:block;} }
+  .trail__track{position:relative; width:2px; height:340px; background:rgba(138,108,82,0.25); margin:0 auto;}
+  .trail__fill{position:absolute; top:0; left:0; width:100%; height:0%; background:var(--rose-deep); transition:height .15s linear;}
+  .trail__dots{position:absolute; top:0; left:50%; height:100%; display:flex; flex-direction:column; justify-content:space-between; transform:translateX(-50%);}
+  .trail-dot{position:relative; width:10px; height:10px; border-radius:50%; background:var(--cream-soft); border:2px solid var(--brown-soft); transition:all .3s ease;}
+  .trail-dot span{
+    position:absolute; left:20px; top:50%; transform:translateY(-50%);
+    font-size:0.78rem; white-space:nowrap; color:var(--brown-soft); opacity:0; transition:opacity .3s ease;
+  }
+  .trail-dot.active{background:var(--rose-deep); border-color:var(--rose-deep); box-shadow:0 0 0 5px rgba(206,123,130,0.2);}
+  .trail-dot.active span{opacity:1; color:var(--rose-deep); font-weight:700;}
+
+  /* ================= HERO ================= */
+  .hero{position:relative; padding:70px 0 90px; overflow:hidden;}
+  .hero .blob-a{width:420px; height:420px; background:var(--oat); top:-140px; right:-120px;}
+  .hero .blob-b{width:220px; height:220px; background:var(--rose); opacity:.35; bottom:-60px; left:-60px;}
+  .hero__grid{position:relative; z-index:1; display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center;}
+  @media (max-width:900px){ .hero__grid{grid-template-columns:1fr; text-align:center;} }
+  .eyebrow{font-size:0.85rem; letter-spacing:0.25em; color:var(--rose-deep); font-weight:700; margin-bottom:14px; display:inline-block;}
+  .hero h1{font-size:clamp(2.1rem, 4.2vw, 3.4rem); line-height:1.35; color:var(--brown);}
+  .hero h1 em{font-style:normal; color:var(--rose-deep); border-bottom:4px solid var(--peach-soft);}
+  .hero__sub{margin-top:22px; font-size:1.08rem; color:var(--brown-soft); max-width:480px;}
+  @media (max-width:900px){ .hero__sub{margin-left:auto; margin-right:auto;} }
+  .hero__ctas{margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;}
+  @media (max-width:900px){ .hero__ctas{justify-content:center;} }
+  .hero__chips{margin-top:34px;}
+  @media (max-width:900px){ .hero__chips{justify-content:center;} }
+
+  .hero__art{position:relative; height:420px;}
+  .hero__stage{position:absolute; inset:0; margin:auto; width:340px; height:340px; background:var(--rose-deep); opacity:0.16; border-radius:var(--radius-blob);}
+  .hero__mascot{position:relative; width:290px; margin:20px auto; color:var(--peach); filter:drop-shadow(0 24px 30px rgba(74,54,38,0.28));}
+  .hero__sticker{
+    position:absolute; background:var(--white); border-radius:20px; padding:12px 16px; box-shadow:var(--shadow);
+    font-size:0.85rem; font-weight:700; color:var(--brown);
+  }
+  .hero__sticker--1{top:10px; left:0; transform:rotate(-6deg);}
+  .hero__sticker--2{bottom:20px; right:0; transform:rotate(5deg); color:var(--rose-deep);}
+  @media (max-width:900px){ .hero__sticker{display:none;} }
+
+  /* ================= SECTION shell ================= */
+  .section{position:relative; padding:100px 0;}
+  .section__head{max-width:640px; margin:0 auto 56px; text-align:center;}
+  .section__head h2{font-size:clamp(1.6rem, 3vw, 2.3rem); margin-top:12px;}
+  .section__head p{margin-top:16px; color:var(--brown-soft); font-size:1.03rem;}
+
+  /* ================= WHY ================= */
+  .why{background:var(--cream-soft);}
+  .why__story{
+    max-width:760px; margin:0 auto 64px; text-align:center; font-size:1.12rem; color:var(--brown-soft);
+    padding:36px 40px; background:var(--white); border-radius:34px; box-shadow:var(--shadow); position:relative;
+  }
+  .why__story::before{content:'“'; font-family:'Noto Serif TC',serif; font-size:4rem; color:var(--rose); position:absolute; top:-6px; left:24px; line-height:1;}
+  .features{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+  @media (max-width:820px){ .features{grid-template-columns:1fr;} }
+  .feature{
+    position:relative; padding:34px 26px 30px; border-radius:28px; background:var(--white);
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  .feature__blob{position:absolute; width:150px; height:150px; border-radius:var(--radius-blob); top:-50px; right:-50px; opacity:0.5;}
+  .feature--1 .feature__blob{background:var(--peach-soft);}
+  .feature--2 .feature__blob{background:var(--rose);}
+  .feature--3 .feature__blob{background:var(--sage);}
+  .feature__tag{display:inline-block; font-size:0.72rem; font-weight:700; letter-spacing:0.1em; padding:4px 12px; border-radius:999px; margin-bottom:14px; position:relative;}
+  .feature--1 .feature__tag{background:var(--peach-soft); color:#8a5a1c;}
+  .feature--2 .feature__tag{background:var(--rose); color:#6d222a;}
+  .feature--3 .feature__tag{background:var(--sage); color:#33422c;}
+  .feature h3{font-size:1.15rem; position:relative;}
+  .feature p{margin-top:10px; color:var(--brown-soft); font-size:0.96rem; position:relative;}
+
+  /* ================= SOCIAL PROOF ================= */
+  .social{background:linear-gradient(180deg, var(--cream-soft), var(--oat) 120%);}
+  .rating{display:flex; align-items:center; justify-content:center; gap:10px; margin-top:8px; color:var(--peach); font-weight:700;}
+  .testimonials{display:grid; grid-template-columns:1fr 1fr; gap:30px;}
+  @media (max-width:760px){ .testimonials{grid-template-columns:1fr;} }
+  .bubble{
+    position:relative; background:var(--white); padding:30px 30px 26px; border-radius:32px 32px 32px 6px;
+    box-shadow:var(--shadow);
+  }
+  .bubble--alt{border-radius:32px 32px 6px 32px;}
+  .bubble p.quote{font-size:1.05rem; color:var(--brown); line-height:1.85;}
+  .bubble__who{margin-top:18px; display:flex; align-items:center; gap:12px; font-size:0.9rem; color:var(--brown-soft);}
+  .bubble__avatar{width:38px; height:38px; border-radius:50%; flex-shrink:0;}
+  .bubble--1 .bubble__avatar{background:var(--rose);}
+  .bubble--2 .bubble__avatar{background:var(--sage);}
+
+  /* ================= COLLECTION ================= */
+  .collection{background:var(--cream-soft);}
+  .collection__grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  @media (max-width:900px){ .collection__grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ .collection__grid{grid-template-columns:1fr;} }
+  .card{
+    background:var(--white); border-radius:28px; overflow:hidden; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .card:hover{transform:translateY(-6px);}
+  .card__stage{position:relative; height:190px; display:flex; align-items:center; justify-content:center;}
+  .card__mascot{width:120px;}
+  .card__tag{position:absolute; top:14px; left:14px; font-size:0.7rem; font-weight:700; padding:5px 12px; border-radius:999px; background:var(--white); color:var(--rose-deep); box-shadow:0 6px 12px -6px rgba(74,54,38,0.4);}
+  .card__body{padding:18px 20px 22px;}
+  .card__name{font-size:1.05rem; font-family:'Noto Serif TC',serif; font-weight:600;}
+  .card__desc{margin-top:6px; font-size:0.88rem; color:var(--brown-soft); min-height:44px;}
+  .card__foot{margin-top:14px; display:flex; align-items:center; justify-content:space-between;}
+  .card__price{font-weight:700; color:var(--rose-deep); font-size:1.05rem;}
+  .card__add{font-size:0.82rem; font-weight:700; padding:8px 16px; border-radius:999px; background:var(--oat); color:var(--brown);}
+  .card__add:hover{background:var(--peach); color:var(--white);}
+
+  /* ================= PARENTS CORNER ================= */
+  .parents{background:linear-gradient(180deg, var(--sage) 0%, #EFE9DC 10%, var(--cream-soft) 100%); position:relative;}
+  .parents::before{content:''; position:absolute; inset:0 0 auto 0; height:120px; background:var(--sage); z-index:0;}
+  .parents .wrap{position:relative; z-index:1;}
+  .parents .section__head{color:var(--white);}
+  .parents .section__head p{color:rgba(255,255,255,0.9);}
+  .parents .eyebrow{color:var(--white);}
+  .parents__badges{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:-40px 0 50px;}
+  .pbadge{
+    background:var(--white); padding:14px 20px; border-radius:20px; box-shadow:var(--shadow);
+    font-size:0.85rem; font-weight:700; color:var(--sage-deep); display:flex; align-items:center; gap:8px;
+  }
+  .faq{max-width:760px; margin:0 auto;}
+  .faq__item{background:var(--white); border-radius:20px; margin-bottom:14px; box-shadow:0 10px 24px -18px rgba(74,54,38,0.4); overflow:hidden;}
+  .faq__item summary{
+    list-style:none; cursor:pointer; padding:20px 24px; display:flex; align-items:center; justify-content:space-between;
+    font-weight:700; font-size:1rem; color:var(--brown);
+  }
+  .faq__item summary::-webkit-details-marker{display:none;}
+  .faq__icon{width:26px; height:26px; border-radius:50%; background:var(--oat); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.1rem; transition:transform .3s ease;}
+  .faq__item[open] .faq__icon{transform:rotate(45deg); background:var(--rose); color:var(--white);}
+  .faq__item p{padding:0 24px 22px; color:var(--brown-soft); font-size:0.95rem;}
+
+  /* ================= FINAL PUSH ================= */
+  .final{
+    background:var(--brown); color:var(--cream); text-align:center; border-radius:44px;
+    margin:0 20px; padding:70px 30px; position:relative; overflow:hidden;
+  }
+  .final .blob{background:var(--rose); opacity:0.25; width:260px; height:260px; top:-100px; left:-80px;}
+  .final .blob2{position:absolute; background:var(--peach); opacity:0.2; width:220px; height:220px; border-radius:var(--radius-blob); bottom:-90px; right:-60px; z-index:0;}
+  .final__inner{position:relative; z-index:1;}
+  .final h2{color:var(--cream); font-size:clamp(1.6rem,3.4vw,2.4rem);}
+  .final__promo{
+    display:inline-flex; align-items:center; gap:10px; margin:24px auto 30px; background:rgba(255,255,255,0.08);
+    border:1px dashed rgba(255,246,230,0.5); padding:12px 22px; border-radius:999px; font-size:0.92rem;
+  }
+  .final__code{background:var(--rose); color:var(--white); padding:3px 10px; border-radius:8px; font-weight:700; letter-spacing:0.05em;}
+
+  /* ================= FOOTER ================= */
+  footer{padding:70px 0 40px; background:var(--cream);}
+  .footer__grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:44px; border-bottom:1px solid rgba(138,108,82,0.2);}
+  @media (max-width:760px){ .footer__grid{grid-template-columns:1fr 1fr;} }
+  .footer__brand{font-size:1.4rem; color:var(--rose-deep); margin-bottom:10px;}
+  .footer__tag{color:var(--brown-soft); font-size:0.9rem; max-width:260px;}
+  .footer h4{font-size:0.85rem; letter-spacing:0.08em; color:var(--brown-soft); margin-bottom:16px;}
+  .footer li{margin-bottom:10px; font-size:0.9rem; color:var(--brown);}
+  .footer__social{display:flex; gap:12px; margin-top:16px;}
+  .footer__social a{width:36px; height:36px; border-radius:50%; background:var(--white); display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow); font-size:0.9rem;}
+  .footer__bottom{display:flex; justify-content:space-between; padding-top:26px; font-size:0.8rem; color:var(--brown-soft); flex-wrap:wrap; gap:10px;}
+
+  /* ================= mobile sticky cta ================= */
+  .sticky-cta{
+    position:fixed; left:0; right:0; bottom:0; z-index:60; display:flex; gap:10px; padding:12px 16px;
+    background:rgba(251,245,234,0.95); backdrop-filter:blur(10px); border-top:1px solid rgba(138,108,82,0.2);
+  }
+  @media (min-width:760px){ .sticky-cta{display:none;} }
+  .sticky-cta .btn{flex:1; justify-content:center;}
+  body{padding-bottom:0;}
+  @media (max-width:759px){ body{padding-bottom:74px;} }
+</style>
+</head>
+<body>
+
+<!-- reusable plush mark -->
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+  <symbol id="icon-plush" viewBox="0 0 200 200">
+    <circle cx="54" cy="52" r="27"/>
+    <circle cx="146" cy="52" r="27"/>
+    <path d="M100,58 C38,58 22,112 33,152 C44,188 76,197 100,197 C124,197 156,188 167,152 C178,112 162,58 100,58 Z"/>
+    <circle class="face" cx="78" cy="116" r="6.5"/>
+    <circle class="face" cx="122" cy="116" r="6.5"/>
+    <path class="face" d="M90,140 Q100,150 110,140" stroke="currentColor" stroke-width="0" fill="none"/>
+    <path d="M91,140 Q100,149 109,140" stroke="#4A3626" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <a href="#hero" class="nav__logo"><span class="script">Mallow & Me</span><small>棉覓</small></a>
+  <nav class="nav__links">
+    <a href="#why">品牌故事</a>
+    <a href="#collection">毛絨系列</a>
+    <a href="#parents">安心保證</a>
+  </nav>
+  <a href="#collection" class="btn btn--primary nav__cta">找到我的玩偶好朋友</a>
+</header>
+
+<!-- ============ SEEKING TRAIL ============ -->
+<div class="trail" aria-hidden="true">
+  <div class="trail__track">
+    <div class="trail__fill"></div>
+    <div class="trail__dots">
+      <div class="trail-dot active"><span>遇見</span></div>
+      <div class="trail-dot"><span>認識</span></div>
+      <div class="trail-dot"><span>心動</span></div>
+      <div class="trail-dot"><span>挑選</span></div>
+      <div class="trail-dot"><span>安心</span></div>
+      <div class="trail-dot"><span>帶回家</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero" data-stage>
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b blob--float"></div>
+  <div class="wrap hero__grid">
+    <div class="reveal is-visible">
+      <span class="eyebrow">MALLOW &amp; ME 棉覓 · 尋覓的旅程，從這裡開始</span>
+      <h1>在棉花堆裡，<br><em>覓</em>一個永遠的擁抱。</h1>
+      <p class="hero__sub">每一針、每一線，都是為了讓孩子找到屬於自己的毛絨好朋友——柔軟、安心，還帶點魔法。</p>
+      <div class="hero__ctas">
+        <a href="#collection" class="btn btn--primary">開始尋覓我的玩偶 →</a>
+        <a href="#collection" class="btn btn--ghost">看看全部款式</a>
+      </div>
+      <div class="chips hero__chips" style="margin-top:34px;">
+        <span class="chip">🌿 天然無毒認證</span>
+        <span class="chip">🧼 可機洗好清潔</span>
+        <span class="chip">🔄 7天鑑賞退換</span>
+      </div>
+    </div>
+    <div class="hero__art reveal is-visible">
+      <div class="hero__stage"></div>
+      <svg class="hero__mascot" viewBox="0 0 200 200"><use href="#icon-plush"/></svg>
+      <div class="hero__sticker hero__sticker--1">超柔軟親膚 ✨</div>
+      <div class="hero__sticker hero__sticker--2">滿$1200 免運 🚚</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section class="section why" id="why" data-stage>
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">02 認識 · About Mallow &amp; Me</span>
+      <h2>不只是玩偶，是孩子的第一個知心朋友</h2>
+    </div>
+    <p class="why__story reveal">
+      Mallow &amp; Me 棉覓 相信，每個孩子都值得一個能陪他們笑、陪他們哭、陪他們長大的柔軟存在。
+      我們從挑選最溫柔的布料開始，到縫上每一針表情，都在尋覓同一件事——
+      讓孩子抱著的，不只是棉花，而是滿滿的安心感與想像力。
+    </p>
+    <div class="features">
+      <div class="feature feature--1 reveal">
+        <div class="feature__blob"></div>
+        <span class="feature__tag">給孩子</span>
+        <h3>可動關節，擺出專屬酷姿勢</h3>
+        <p>四肢與頭部皆可轉動，不管是耍帥還是賣萌，怎麼擺都是你的風格，拍照打卡超上鏡。</p>
+      </div>
+      <div class="feature feature--2 reveal">
+        <div class="feature__blob"></div>
+        <span class="feature__tag">給孩子</span>
+        <h3>暗藏拉鍊祕密口袋</h3>
+        <p>背後藏著一個小口袋，放進小紙條、小玩具或悄悄話，每天都有新的小冒險等著被發現。</p>
+      </div>
+      <div class="feature feature--3 reveal">
+        <div class="feature__blob"></div>
+        <span class="feature__tag">給爸媽</span>
+        <h3>頂級有機棉 + 國際安全認證</h3>
+        <p>通過 ST 安全玩具檢驗，觸感如雲朵般柔軟，就算每晚抱著入睡，也完全不刺激、不過敏。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOCIAL PROOF ============ -->
+<section class="section social" id="social" data-stage>
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">03 心動 · 大家都在說</span>
+      <h2>真實家庭的溫暖時刻</h2>
+      <div class="rating">★★★★★ <span style="color:var(--brown-soft); font-weight:400;">4.9 分・來自上千個溫暖擁抱</span></div>
+    </div>
+    <div class="testimonials">
+      <div class="bubble bubble--1 reveal">
+        <p class="quote">「它是我收過最酷的生日禮物，同學都說超好看，我每天都要帶去學校跟大家炫耀！」</p>
+        <div class="bubble__who"><span class="bubble__avatar"></span>10 歲・小翔</div>
+      </div>
+      <div class="bubble bubble--2 bubble--alt reveal">
+        <p class="quote">「材質摸起來真的很舒服，也沒有奇怪的味道，女兒每天都要抱著它才肯睡覺，完全不過敏。」</p>
+        <div class="bubble__who"><span class="bubble__avatar"></span>兩寶媽咪</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLLECTION ============ -->
+<section class="section collection" id="collection" data-stage>
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">04 挑選 · 找到你的那一個</span>
+      <h2>毛絨家族，總有一個對上你的眼</h2>
+      <p>每一款棉覓玩偶，都有自己的個性與小故事。</p>
+    </div>
+    <div class="collection__grid">
+
+      <div class="card reveal">
+        <div class="card__stage" style="background:var(--peach-soft);">
+          <span class="card__tag">人氣款</span>
+          <svg class="card__mascot" viewBox="0 0 200 200" style="color:var(--peach);"><use href="#icon-plush"/></svg>
+        </div>
+        <div class="card__body">
+          <div class="card__name">森林狐狸・覓可</div>
+          <p class="card__desc">軟綿絨毛，蓬鬆大尾巴最好抱，是森林裡最愛冒險的小傢伙。</p>
+          <div class="card__foot"><span class="card__price">NT$690</span><span class="card__add">加入購物車</span></div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card__stage" style="background:var(--rose);">
+          <span class="card__tag">夜光新品</span>
+          <svg class="card__mascot" viewBox="0 0 200 200" style="color:#B98A6F;"><use href="#icon-plush"/></svg>
+        </div>
+        <div class="card__body">
+          <div class="card__name">星空熊・棉柔</div>
+          <p class="card__desc">肚肚會微微夜光，晚安故事講到一半也不怕黑，安心入睡。</p>
+          <div class="card__foot"><span class="card__price">NT$790</span><span class="card__add">加入購物車</span></div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card__stage" style="background:var(--oat-deep);">
+          <span class="card__tag">熱銷中</span>
+          <svg class="card__mascot" viewBox="0 0 200 200" style="color:var(--white);"><use href="#icon-plush"/></svg>
+        </div>
+        <div class="card__body">
+          <div class="card__name">奇幻兔・毛毛</div>
+          <p class="card__desc">長耳朵可以綁蝴蝶結，天天換造型，是最時髦的玩偶好朋友。</p>
+          <div class="card__foot"><span class="card__price">NT$650</span><span class="card__add">加入購物車</span></div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card__stage" style="background:var(--sage);">
+          <svg class="card__mascot" viewBox="0 0 200 200" style="color:var(--cream-soft);"><use href="#icon-plush"/></svg>
+        </div>
+        <div class="card__body">
+          <div class="card__name">深海鯨魚・藍藍</div>
+          <p class="card__desc">加大尺寸，抱起來最療癒，是睡前抱枕的最佳候選人。</p>
+          <div class="card__foot"><span class="card__price">NT$720</span><span class="card__add">加入購物車</span></div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card__stage" style="background:var(--peach);">
+          <span class="card__tag">限量</span>
+          <svg class="card__mascot" viewBox="0 0 200 200" style="color:var(--white);"><use href="#icon-plush"/></svg>
+        </div>
+        <div class="card__body">
+          <div class="card__name">恐龍寶寶・阿波</div>
+          <p class="card__desc">男孩女孩都愛的酷系選擇，帶點傻氣，是最佳冒險夥伴。</p>
+          <div class="card__foot"><span class="card__price">NT$690</span><span class="card__add">加入購物車</span></div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card__stage" style="background:var(--oat);">
+          <svg class="card__mascot" viewBox="0 0 200 200" style="color:var(--rose-deep);"><use href="#icon-plush"/></svg>
+        </div>
+        <div class="card__body">
+          <div class="card__name">雲朵貓・奶霜</div>
+          <p class="card__desc">軟到犯規的雲朵觸感，摸過一次就會愛上，怎麼抱都不膩。</p>
+          <div class="card__foot"><span class="card__price">NT$650</span><span class="card__add">加入購物車</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARENTS CORNER ============ -->
+<section class="section parents" id="parents" data-stage>
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">05 安心 · 爸媽請放心</span>
+      <h2>把最柔軟、最安全的，留給孩子</h2>
+      <p>從材質到售後，每一個環節，我們都站在爸媽這一邊。</p>
+    </div>
+    <div class="parents__badges reveal">
+      <span class="pbadge">🛡️ ST 安全玩具認證</span>
+      <span class="pbadge">🇪🇺 CE 標準</span>
+      <span class="pbadge">🌿 無毒材質</span>
+      <span class="pbadge">🔬 第三方檢驗</span>
+    </div>
+    <div class="faq reveal">
+      <details class="faq__item" open>
+        <summary>材質安全嗎？<span class="faq__icon">+</span></summary>
+        <p>我們所有玩偶皆採用通過國際 ST 安全玩具認證與 CE 標準的無毒材質，經第三方檢驗合格，寶貝抱著、啃咬都安心。</p>
+      </details>
+      <details class="faq__item">
+        <summary>怎麼清潔保養？<span class="faq__icon">+</span></summary>
+        <p>大部分款式可直接手洗，或裝入洗衣袋以 30 度以下水溫機洗，洗後自然平鋪陰乾，就能維持蓬鬆柔軟的觸感。</p>
+      </details>
+      <details class="faq__item">
+        <summary>退換貨政策是什麼？<span class="faq__icon">+</span></summary>
+        <p>下單後 7 天內，只要玩偶保持全新、未拆吊牌的狀態，即可申請無條件退換，讓你安心選購不擔心。</p>
+      </details>
+      <details class="faq__item">
+        <summary>適合幾歲的孩子？<span class="faq__icon">+</span></summary>
+        <p>我們的玩偶適合 3 歲以上孩童；若家中有 3 歲以下幼兒，建議由家長陪同遊玩，避免誤食小型配件。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL PUSH ============ -->
+<section class="section" id="final" data-stage style="padding-top:0;">
+  <div class="final reveal">
+    <div class="blob blob--float"></div>
+    <div class="blob2"></div>
+    <div class="final__inner">
+      <span class="eyebrow" style="color:var(--peach-soft);">06 帶回家 · 別讓TA等太久</span>
+      <h2>你的毛絨好朋友，正在等你來找它</h2>
+      <p style="color:rgba(255,246,230,0.85); margin-top:14px;">加入 Mallow &amp; Me 棉覓，讓孩子的童年多一個溫暖的擁抱。</p>
+      <div class="final__promo">
+        🎉 輸入折扣碼 <span class="final__code">MALLOW20</span> 全館 8 折，只到本週日晚上 12 點
+      </div>
+      <div>
+        <a href="#collection" class="btn btn--peach">立即帶TA回家 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand script">Mallow &amp; Me</div>
+        <p class="footer__tag">棉覓 — 讓每個孩子，都找得到屬於自己的毛絨玩偶。</p>
+        <div class="footer__social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="TikTok">TT</a>
+          <a href="#" aria-label="YouTube">YT</a>
+        </div>
+      </div>
+      <div>
+        <h4>關於棉覓</h4>
+        <ul>
+          <li><a href="#why">品牌故事</a></li>
+          <li><a href="#collection">毛絨系列</a></li>
+          <li><a href="#parents">常見問題</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>購物資訊</h4>
+        <ul>
+          <li><a href="#">退換貨政策</a></li>
+          <li><a href="#">隱私權政策</a></li>
+          <li><a href="#">服務條款</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>聯絡我們</h4>
+        <ul>
+          <li>hello@mallowandme.com</li>
+          <li>LINE 客服：@mallowme</li>
+          <li>服務時間 週一至週五 10:00–18:00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Mallow &amp; Me 棉覓. All rights reserved.</span>
+      <span>用柔軟，陪伴每一個成長的瞬間。</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ MOBILE STICKY CTA ============ -->
+<div class="sticky-cta">
+  <a href="#collection" class="btn btn--primary">立即選購 →</a>
+  <a href="#parents" class="btn btn--ghost">安心保證</a>
+</div>
+
+<script>
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-visible'); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el=> io.observe(el));
+
+  // seeking trail progress + active waypoint
+  const stages = document.querySelectorAll('[data-stage]');
+  const dots = document.querySelectorAll('.trail-dot');
+  const fill = document.querySelector('.trail__fill');
+
+  function updateTrail(){
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? Math.min(1, Math.max(0, scrollTop/docHeight)) : 0;
+    if(fill) fill.style.height = (progress*100) + '%';
+
+    let current = 0;
+    stages.forEach((sec,i)=>{
+      const rect = sec.getBoundingClientRect();
+      if(rect.top <= window.innerHeight*0.5) current = i;
+    });
+    dots.forEach((d,i)=> d.classList.toggle('active', i===current));
+  }
+  window.addEventListener('scroll', updateTrail, {passive:true});
+  updateTrail();
+</script>
+
+</body>
+</html>
