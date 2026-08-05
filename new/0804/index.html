@@ -307,6 +307,56 @@
   .sticky-cta .btn{flex:1; justify-content:center;}
   body{padding-bottom:0;}
   @media (max-width:759px){ body{padding-bottom:74px;} }
+
+ /* ===== 贈品圖片區塊：手機版預設為文件流內置中顯示 ===== */
+.final__gift{
+  position:relative;
+  width:190px;
+  height:170px;
+  margin:8px auto 36px;
+}
+.final__gift-img{
+  width:100%;
+  height:100%;
+  background-color:#A8896A;
+  object-fit:cover;
+  border-radius:16px;
+  box-shadow:none;
+  display:block;
+}
+.final__gift-sticker{
+  position:absolute;
+  background:var(--white);
+  border-radius:20px;
+  padding:8px 14px;
+  box-shadow:var(--shadow);
+  font-size:0.72rem;
+  font-weight:700;
+  color:var(--brown);
+  white-space:nowrap;
+}
+.final__gift-sticker--1{ top:-10px; left:-16px; transform:rotate(-6deg); }
+.final__gift-sticker--2{ bottom:-10px; right:-16px; transform:rotate(5deg); color:var(--rose-deep); }
+
+/* ===== 桌機版才切回右側絕對定位 ===== */
+@media (min-width:1200px){
+  .final__gift{
+    position:absolute;
+    top:50%;
+    right:40px;
+    transform:translateY(-50%);
+    width:clamp(200px, 18vw, 300px);
+    height:clamp(180px, 16vw, 280px);
+    margin:0;
+    z-index:2;
+  }
+  .final__gift-sticker{
+    font-size:0.82rem;
+    padding:10px 16px;
+  }
+  .final__gift-sticker--1{ top:-14px; left:-22px; }
+  .final__gift-sticker--2{ bottom:-14px; right:-22px; }
+}
 </style>
 </head>
 <body>
@@ -572,13 +622,23 @@
   <div class="final reveal">
     <div class="blob blob--float"></div>
     <div class="blob2"></div>
+
     <div class="final__inner">
       <span class="eyebrow" style="color:var(--peach-soft);">06 帶回家 · 別讓TA等太久</span>
       <h2>你的毛絨好朋友，正在等你來找它</h2>
       <p style="color:rgba(255,246,230,0.85); margin-top:14px;">加入 Mallow &amp; Me 棉覓，讓孩子的童年多一個溫暖的擁抱。</p>
+
       <div class="final__promo">
         🎉 輸入折扣碼 <span class="final__code">MALLOW20</span> 全館 8 折，只到本週日晚上 12 點
       </div>
+
+      <!-- 贈品圖片＋貼紙，現在在 promo 跟按鈕之間 -->
+      <div class="final__gift">
+        <img src="./img/logobox.png" alt="附贈小盒" class="final__gift-img">
+        <span class="final__gift-sticker final__gift-sticker--1">限量小盒 🎁</span>
+        <span class="final__gift-sticker final__gift-sticker--2">贈完為止 🌸</span>
+      </div>
+
       <div>
         <a href="#collection" class="btn btn--peach">立即帶TA回家 →</a>
       </div>
